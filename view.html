@@ -1,0 +1,108 @@
+<button onclick="goBack()">⬅ Back</button>
+
+<script>
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Students</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            margin: 10px auto;
+            padding: 10px;
+            width: 320px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px gray;
+        }
+
+        input {
+            padding: 8px;
+            width: 250px;
+            margin: 10px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Student List</h2>
+
+<input id="search" placeholder="Search by name..." onkeyup="searchStudent()">
+
+<div id="list"></div>
+
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+function display(data) {
+    let output = "";
+
+    data.forEach((s, index) => {
+        output += `
+        <div class="card">
+            <b>${s.name}</b><br>
+            ${s.usn} - ${s.branch}
+
+            <br><br>
+            <button onclick="view(${index})">View</button>
+            <button onclick="edit(${index})">Edit</button>
+            <button onclick="del(${index})">Delete</button>
+        </div>
+        `;
+    });
+
+    document.getElementById("list").innerHTML = output;
+}
+
+function searchStudent() {
+    let value = document.getElementById("search").value.toLowerCase();
+
+    let filtered = students.filter(s =>
+        s.name.toLowerCase().includes(value)
+    );
+
+    display(filtered);
+}
+
+function view(i) {
+    let s = students[i];
+    alert(
+        "Name: " + s.name +
+        "\nUSN: " + s.usn +
+        "\nSemester: " + s.sem +
+        "\nBranch: " + s.branch
+    );
+}
+
+function edit(i) {
+    localStorage.setItem("editIndex", i);
+    window.location.href = "student.html";
+}
+
+function del(i) {
+    students.splice(i, 1);
+    localStorage.setItem("students", JSON.stringify(students));
+    display(students);
+}
+
+display(students);
+</script>
+
+</body>
+</html>

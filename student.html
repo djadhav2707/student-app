@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 320px;
+            margin: auto;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            padding: 10px;
+            width: 95%;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Add / Edit Student</h2>
+
+<input id="name" placeholder="Student Name">
+<input id="usn" placeholder="USN">
+<input id="sem" placeholder="Semester">
+<input id="section" placeholder="Section">
+<input id="branch" placeholder="Branch">
+<input id="phone" placeholder="Student Phone">
+<input id="pemail" placeholder="Personal Email">
+<input id="cemail" placeholder="College Email">
+
+<h3>Father Details</h3>
+<input id="fname" placeholder="Father Name">
+<input id="fphone" placeholder="Father Phone">
+
+<h3>Mother Details</h3>
+<input id="mname" placeholder="Mother Name">
+<input id="mphone" placeholder="Mother Phone">
+
+<button onclick="saveStudent()">Save Student</button>
+</div>
+
+<script>
+let editIndex = localStorage.getItem("editIndex");
+
+if(editIndex !== null){
+    let students = JSON.parse(localStorage.getItem("students"));
+    let s = students[editIndex];
+
+    document.getElementById("name").value = s.name;
+    document.getElementById("usn").value = s.usn;
+    document.getElementById("sem").value = s.sem;
+    document.getElementById("section").value = s.section;
+    document.getElementById("branch").value = s.branch;
+    document.getElementById("phone").value = s.phone;
+    document.getElementById("pemail").value = s.pemail;
+    document.getElementById("cemail").value = s.cemail;
+    document.getElementById("fname").value = s.fname;
+    document.getElementById("fphone").value = s.fphone;
+    document.getElementById("mname").value = s.mname;
+    document.getElementById("mphone").value = s.mphone;
+}
+
+function saveStudent() {
+
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+
+    let student = {
+        name: name.value,
+        usn: usn.value,
+        sem: sem.value,
+        section: section.value,
+        branch: branch.value,
+        phone: phone.value,
+        pemail: pemail.value,
+        cemail: cemail.value,
+        fname: fname.value,
+        fphone: fphone.value,
+        mname: mname.value,
+        mphone: mphone.value
+    };
+
+    if(editIndex !== null){
+        students[editIndex] = student;
+        localStorage.removeItem("editIndex");
+    } else {
+        students.push(student);
+    }
+
+    localStorage.setItem("students", JSON.stringify(students));
+
+    alert("Saved Successfully!");
+    window.location.href = "dashboard.html";
+}
+</script>
+<button onclick="goBack()">⬅ Back</button>
+
+<script>
+function goBack() {
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

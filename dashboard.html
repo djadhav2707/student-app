@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Dashboard</h2>
+
+<button onclick="goToAdd()">Enter Student Details</button><br><br>
+<button onclick="goToView()">View Students</button><br><br>
+
+<h3>Filter by Branch</h3>
+
+<button onclick="filter('CSE')">CSE</button>
+<button onclick="filter('ISE')">ISE</button>
+<button onclick="filter('ECE')">ECE</button>
+<button onclick="filter('EEE')">EEE</button>
+<button onclick="filter('AIML')">AIML</button>
+
+<script>
+function goToAdd() {
+    window.location.href = "student.html";
+}
+
+function goToView() {
+    localStorage.removeItem("filterBranch");
+    window.location.href = "view.html";
+}
+
+function filter(branch) {
+    localStorage.setItem("filterBranch", branch);
+    window.location.href = "view.html";
+}
+</script>
+
+</body>
+</html>
